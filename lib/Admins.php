@@ -25,7 +25,7 @@ class Admin implements ISavable{
 
 		function save() {
 		$stmt = DB::getInstance()->getConnection()->prepare("INSERT INTO $this->tableName (name, role, phone, email, image, password) VALUES (?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param('siisss', $this->name, $this->$role, $this->$phone, $this->$email, $this->image, $this->password); 
+		$stmt->bind_param('siisss', $this->name, $this->$role, $this->$phone, $this->$email, $this->image, $this->password) ; 
 
 		$stmt->execute();
 				
@@ -49,23 +49,51 @@ class Admin implements ISavable{
 		$result = DB::getInstance()->getConnection()->query("SELECT * FROM admins limit 1000");
 		$rows = [];
 		while ($row = $result->fetch_assoc()) {
-			if (!$result) {
-    throw new Exception("Database Error [{$this->database->errno}] {$this->database->error}");
-}
-			$rows []= new self( $row['id'],$row ['name'],  $row['role'], $row['phone'], $row['email'], $row['image'], $row['password']);
+                    if (!$result) {
+                        throw new Exception("Database Error [{$this->database->errno}] {$this->database->error}");
+                    }
+                    $rows []= new self( $row['id'],$row ['name'],  $row['role'], $row['phone'], $row['email'], $row['image'], $row['password']);
 		}
 		return $rows;
+	}
+        
+        private static function selectRow($id) {
+            $result = DB::getInstance()->getConnection()->query("SELECT * FROM admins WHERE admins.id = $id");
+            $row = $result->fetch_assoc();
+            if (!$result) {
+                throw new Exception("Database Error [{$this->database->errno}] {$this->database->error}");
+            }
+            return $row;
 	}
 
 	public static function printlist() {
 		$rows = self::selectAll();
           $html  = '';
 		for ($i=0, $count = count($rows); $i < $count; $i++) { 
-			$html .="<a href=?page=admins&action=edit&id={$rows[$i]->id}>";
+                        $html .="<a class='itemAdmin'></a>";
+//			$html .="<a href=?page=admins&action=edit&id={$rows[$i]->id}>";
 			$html .= "<img src = 'img/admins images/{$rows[$i]->image}'>";
 			$html .= "<span>{$rows[$i]->name}</span>";
 			$html .= "<span>{$rows[$i]->phone}</span>";
 			// $html .= "<span>{$rows[$i]->email}</span>";
+			$html .= '</a>';
+		}
+		return $html;
+	}
+        
+        public static function printditails() {
+		$row = self::selectRow();
+                $html  = '';
+		for ($i=0, $count = count($row); $i < $count; $i++) { 
+                        $html .="<a class='itemAdmin'></a>";
+//			$html .="<a href=?page=admins&action=edit&id={$row[$i]->id}>";
+			$html .= "<img src = 'img/admins images/{$row->image}'>";
+			$html .= "<span>{$row->name}</span>";
+			$html .= "<span>{$row->role}</span>";
+			$html .= "<span>{$row->phone}</span>";
+			$html .= "<span>{$rows->email}</span>";
+			$html .= "<span>{$rows->image}</span>";
+			$html .= "<span>{$rows->password}</span>";
 			$html .= '</a>';
 		}
 		return $html;

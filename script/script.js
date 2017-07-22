@@ -1,76 +1,80 @@
-//$(document).ready(function);
-//  $html  = '';
-//$('.schoolButton').click(function(event) {
-//	$.get('html/printschool.php', function(data) {
-//		$('.containerPrint').html(data);
-//	});
-//});
+    $(document).ready(function(event){
+        buildSchool();
+//        new Promise (function(resolve){
+//            $.get('html/printschool.php', function(data) {
+//                resolve(data);
+//            });  
+//        });
+//        }).then(function(data){
+//            $('.containerPrint').html(data);
+//        }).then( function (){
+    });
 
-// $html  = '';
-//$('.adminsButton').click(function(event) {
-//	$.get('html/printadmin.php', function(data) {
-//		$('.containerPrint').html(data);
-//	});
+$('.adminsButton').click(function(event) {
+    $('.containerForm').empty();
+    new Promise(function (resolve){
+        $.get('html/printadmin.php', function(data){
+            resolve(data);		
+        });
+    }).then(function (data) {
+        $('.containerPrint').html(data);
+    }).then(function(){
+        return new Promise(function(resolve){
+            $('.addadmin').click(function(event) {
+                 resolve(event);
+            });
+        });
+        
+    }).then(function(resolve){
+       return new Promise(function(resolve){
+            $.get('html/formadmin.php', function(data) {
+            resolve(data);	
+    //	console.log(data);
+            });
+        });
+    }).then(function (data) {
+        $('.containerForm').html(data);
+    });
+  });  
+//    *******************
+//    
 
-//new Promise(function (resolve){
-//    $('.schoolButton').click(function(event) {
-//	$.get('html/printschool.php', function(data) {
-//		$('.containerPrint').html(data);
-//	});
-//});
-//
-//})
-//.then(function(){
-//    return new Promise(function(resolve){
-//	$('.add').click(function(event) {
-//    console.log('hi');
-//	$.get('html/form.php', function(data) {
-//		$('.containerForm').html(data);
-//	});
-//});
-//});
-
-//$('.add').click(function(event) {
-//    console.log('hi')
-//	$.get('html/form.php', function(data) {
-//		$('.containerForm').html(data);
-//	});
-//});
-//
-////$('.button').click();
-  
-
-//$('.button').click(function() {
-//
-// $.ajax({
-//  type: "POST",
-//  url: "some.php",
-//  data: { name: "John" }
-//}).done(function( msg ) {
-//  alert( "Data Saved: " + msg );
-//});    
-//
-//    });
-
-new Promise(function (resolve){
-    $('.schoolButton').click(function(event) {
-console.log('hi');
-	('html/printschool.php', function(data) {
-		resolve(data);
+$('.schoolButton').click(function(event) {
+    buildSchool();
+       
+ });
+ 
+ function buildSchool(){
+     new Promise(function (resolve){
+        $('.containerForm').empty();
+	$.get('html/printschool.php', function(data) {
+            resolve(data);		
 	});
-     });
-}).then(function(resolve){
-    console.log('hi3');
-	$('.containerPrint').html(data);
-        resolve(data);
-});
-
-//.then(function(){
-//	return new Promise(function(resolve){
-//		$('form').click(function(e){
-//		e.preventDefault();
-//		resolve();
-//
-//	})
-//  })
-//})
+    }).then(function (data) {
+        $('.containerPrint').html(data);
+    }).then(function(){
+        $('.addstudent').click(function(event) {
+            return new Promise(function(resolve){
+                $.get('html/form.php', function(data){
+                    resolve(event);
+                
+            }).then(function (data) {
+                $('.containerForm').html(data);
+                });
+            });
+        });
+        $('.addcourse').click(function(event) {
+            return new Promise(function(resolve){
+                $.get('html/formcourse.php', function(data) {
+                    resolve(event);
+                }).then(function (data) {
+                    $('.containerForm').html(data);
+                });
+            });
+        });
+    });   
+       
+     
+ }
+ 
+ 

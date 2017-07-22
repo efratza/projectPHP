@@ -21,8 +21,8 @@ class Students implements ISavable{
 	}
 
 	public function save() {
-		$stmt = DB::getInstance()->getConnection()->prepare("INSERT INTO $this->tableName (name, phone, email, image) VALUES (?, ?, ?, ?)");
-		$stmt->bind_param('siss', $this->name, $this->$phone, $this->$email, $this->image); 
+		$stmt = DB::getInstance()->getConnection()->prepare("INSERT INTO students (name, phone, email, image) VALUES (?, ?, ?, ?)");
+		$stmt->bind_param('siss', $this->name, $this->phone, $this->email, $this->image); 
 
 		$stmt->execute();
 				
@@ -55,7 +55,8 @@ class Students implements ISavable{
 		$rows = self::selectAll();
           $html  = '';
 		for ($i=0, $count = count($rows); $i < $count; $i++) { 
-			$html .="<a href=?page=students&action=edit&id={$rows[$i]->id}>";
+			$html .="<a class='itemStudent'>";
+//                                . "href=?page=students&action=edit&id={$rows[$i]->id}>";
 			$html .= "<img src = 'img/students images/{$rows[$i]->image}'>";
 			$html .= "<span>{$rows[$i]->name}</span>";
 			$html .= "<span>{$rows[$i]->phone}</span>";

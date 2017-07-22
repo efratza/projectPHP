@@ -22,12 +22,26 @@ include '../lib/Admins.php';
          flex-direction: column;
 
   }
+  a{
+      cursor: pointer;
+  }
+
+  .addadmin{
+      font-size: 30px;
+      
+  }
 
     </style>
 </head>
 <body>
     <div class="containerlist">
+     <div class="containerlist">
+         <span>
+                <h3 class = 'aside_title'>Administration</h3>
+                <a class ='addadmin' >+</a>
+         </span>
       <?php echo Admin::printlist();?>
+    </div>
     </div>
   </div>
   

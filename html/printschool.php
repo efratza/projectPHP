@@ -25,22 +25,35 @@ include '../lib/DB.php';
          flex-direction: column;
 
   }
+  a{
+      cursor: pointer;
+  }
 
-
+  .addcourse , .addstudent{
+      font-size: 30px;
+      
+  }
 
     </style>
 </head>
 <body>
-  <div class="bigContainer">
-    <div class="containerlist">
-        <input class="add" type="button" value="button"/>
-      <?php echo Courses::printlist();?>
-      
+    <div class="bigContainer">
+        <div class="containerlist">
+             <span>
+                    <h3 class = 'aside_title'>Courses</h3>
+                    <a class ='addcourse' >+</a>
+             </span>
+            <?php echo Courses::printlist();?>
+
+        </div>
+        <div class="containerlist">
+            <span>    
+                    <h3 class  = 'aside_title'>Students</h3>
+                    <a class ='addstudent' >+</a>
+            </span>
+          <?php echo Students::printlist(); ?>
+        </div>
     </div>
-    <div class="containerlist">
-      <?php echo Students::printlist(); ?>
-    </div>
-  </div>
   
       
 

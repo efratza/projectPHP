@@ -66,7 +66,8 @@ class Courses implements ISavable{
 		$rows = self::selectAll();
           $html  = '';
 		for ($i=0, $count = count($rows); $i < $count; $i++) { 
-			$html .="<a href=?page=courses&action=edit&id={$rows[$i]->id}>";
+			$html .="<a class='itemCourses' >";
+//                                . "href=?page=courses&action=edit&id={$rows[$i]->id}>";
 			$html .= "<img src = 'img/courses images/{$rows[$i]->image}'>";
 			$html .= "<span>{$rows[$i]->name}</span>";
 			// $html .= "<span>{$rows[$i]->description}</span>";
